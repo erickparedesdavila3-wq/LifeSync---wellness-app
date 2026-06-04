@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wellness App</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f5f7ff;
+}
+
+header{
+    background:linear-gradient(135deg,#6c63ff,#9c6bff);
+    color:white;
+    padding:25px;
+    text-align:center;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.progress-container{
+    background:#eee;
+    border-radius:20px;
+    overflow:hidden;
+    height:20px;
+}
+
+.progress{
+    height:100%;
+    width:65%;
+    background:linear-gradient(90deg,#6c63ff,#9c6bff);
+}
+
+.stats{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+}
+
+.btn{
+    margin-top:15px;
+    border:none;
+    padding:10px 20px;
+    border-radius:10px;
+    background:#6c63ff;
+    color:white;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#574fff;
+}
+
+.pet{
+    font-size:80px;
+    text-align:center;
+}
+
+.level{
+    text-align:center;
+    margin-top:10px;
+}
+
+.challenge{
+    margin-top:15px;
+    padding:15px;
+    background:#eef2ff;
+    border-radius:15px;
+}
+
+footer{
+    text-align:center;
+    margin-top:30px;
+    padding:20px;
+    color:#666;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border:1px solid #ddd;
+    border-radius:10px;
+}
+
+.badge{
+    display:inline-block;
+    background:#ffe08a;
+    padding:5px 10px;
+    border-radius:20px;
+    margin-top:10px;
+}
+
+.ai-box{
+    background:#f0f8ff;
+    border-left:5px solid #6c63ff;
+    padding:10px;
+    margin-top:10px;
+    border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🌱 Wellness App</h1>
+    <p>Tu bienestar, tu mejor versión</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>Hola, Erick 👋</h2>
+        <p>Tu progreso de hoy</p>
+
+        <div class="progress-container">
+            <div class="progress" id="dailyProgress"></div>
+        </div>
+
+        <p id="progressText">65% completado</p>
+    </div>
+
+    <br>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>💧 Agua</h3>
+            <p>Meta: 8 vasos</p>
+            <h2 id="waterCount">0</h2>
+            <button class="btn" onclick="addWater()">Agregar vaso</button>
+        </div>
+
+        <div class="card">
+            <h3>🏃 Actividad Física</h3>
+            <p>Pasos realizados</p>
+            <h2 id="steps">0</h2>
+            <button class="btn" onclick="addSteps()">+1000 pasos</button>
+        </div>
+
+        <div class="card">
+            <h3>🥗 Alimentación</h3>
+            <p>Frutas y verduras</p>
+            <h2 id="food">0</h2>
+            <button class="btn" onclick="addFood()">Agregar porción</button>
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>🐣 Mascota Virtual</h3>
+
+            <div class="pet" id="pet">
+                🌱
+            </div>
+
+            <div class="level">
+                Nivel <span id="level">1</span>
+            </div>
+
+            <div class="badge">
+                XP: <span id="xp">0</span>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <h3>🏆 Racha</h3>
+            <h1 id="streak">0</h1>
+            <p>días saludables</p>
+
+            <div class="challenge">
+                Meta:
+                <br>
+                Beber 8 vasos de agua
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🤖 IA Wellness</h3>
+
+            <div class="ai-box" id="advice">
+                Hoy intenta caminar 30 minutos.
+            </div>
+
+            <button class="btn" onclick="generateAdvice()">
+                Nuevo consejo
+            </button>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="card">
+        <h3>📊 Estadísticas</h3>
+
+        <p>Agua: <span id="statWater">0</span> vasos</p>
+        <p>Pasos: <span id="statSteps">0</span></p>
+        <p>Alimentación saludable: <span id="statFood">0</span></p>
+
+    </div>
+
+</div>
+
+<footer>
+    Wellness App © 2026
+</footer>
+
+<script>
+
+let water = 0;
+let steps = 0;
+let food = 0;
+let xp = 0;
+let level = 1;
+
+function updateProgress(){
+
+    let total = (
+        Math.min(water,8)/8 +
+        Math.min(steps,10000)/10000 +
+        Math.min(food,5)/5
+    ) / 3;
+
+    let percentage = Math.round(total*100);
+
+    document.getElementById("dailyProgress").style.width =
+    percentage + "%";
+
+    document.getElementById("progressText").innerText =
+    percentage + "% completado";
+}
+
+function addXP(points){
+
+    xp += points;
+
+    if(xp >= level*100){
+        level++;
+        document.getElementById("level").innerText = level;
+
+        alert("🎉 ¡Subiste al nivel " + level + "!");
+    }
+
+    document.getElementById("xp").innerText = xp;
+}
+
+function addWater(){
+
+    water++;
+
+    document.getElementById("waterCount").innerText = water;
+    document.getElementById("statWater").innerText = water;
+
+    addXP(10);
+    updateProgress();
+}
+
+function addSteps(){
+
+    steps += 1000;
+
+    document.getElementById("steps").innerText = steps;
+    document.getElementById("statSteps").innerText = steps;
+
+    addXP(15);
+    updateProgress();
+}
+
+function addFood(){
+
+    food++;
+
+    document.getElementById("food").innerText = food;
+    document.getElementById("statFood").innerText = food;
+
+    addXP(20);
+    updateProgress();
+}
+
+function generateAdvice(){
+
+    const tips = [
+
+        "💧 Bebe más agua durante el día.",
+        "🏃 Realiza 30 minutos de actividad física.",
+        "🍎 Consume más frutas y verduras.",
+        "😴 Intenta dormir al menos 8 horas.",
+        "🚶 Da una caminata después de almorzar.",
+        "📵 Reduce el uso del celular antes de dormir.",
+        "🧘 Practica respiraciones profundas."
+    ];
+
+    let random =
+        Math.floor(Math.random()*tips.length);
+
+    document.getElementById("advice").innerText =
+        tips[random];
+}
+
+updateProgress();
+
+</script>
+
+</body>
+</html>
