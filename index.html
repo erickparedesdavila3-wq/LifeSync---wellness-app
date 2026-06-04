@@ -3,413 +3,305 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wellness App</title>
-.welcome-screen{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:linear-gradient(135deg,#6c63ff,#9c6bff);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-}
+<title>Wellness - Leafy</title>
 
-.welcome-card{
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    width:320px;
-    text-align:center;
-    box-shadow:0 5px 20px rgba(0,0,0,.2);
-}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-.welcome-card h1{
-    margin-bottom:10px;
-}
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-   <div id="welcomeScreen" class="welcome-screen">
-  <div class="welcome-card">
-    <h1>🌱 LifeSync</h1>
-    <p>Bienvenido a tu app de bienestar</p>
-
-    <input type="text" id="userName" placeholder="Escribe tu nombre">
-    <input type="number" id="userAge" placeholder="Escribe tu edad">
-
-    <button class="btn" onclick="startApp()">Comenzar</button>
-  </div>
-</div>
+background:#f5f7ff;
+color: #2d3748;
 }
 
 header{
-    background:linear-gradient(135deg,#6c63ff,#9c6bff);
-    color:white;
-    padding:25px;
-    text-align:center;
+background:linear-gradient(135deg,#6C63FF,#8B5CF6);
+color:white;
+padding:25px;
+border-radius:0 0 30px 30px;
+box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+}
+
+header h1{
+font-size:28px;
+}
+
+.streak{
+margin-top:15px;
+background:rgba(255,255,255,.2);
+padding:10px 15px;
+border-radius:15px;
+display:inline-block;
+font-weight:bold;
 }
 
 .container{
-    width:90%;
-    max-width:1200px;
-    margin:auto;
-    padding:20px;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
+padding:20px;
+max-width:600px; /* Tamaño ideal para simular app móvil en web */
+margin:auto;
 }
 
 .card{
-    background:white;
-    border-radius:20px;
-    padding:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
-}
-
-.card h3{
-    margin-bottom:10px;
-}
-
-.progress-container{
-    background:#eee;
-    border-radius:20px;
-    overflow:hidden;
-    height:20px;
-}
-
-.progress{
-    height:100%;
-    width:65%;
-    background:linear-gradient(90deg,#6c63ff,#9c6bff);
-}
-
-.stats{
-    display:flex;
-    justify-content:space-between;
-    margin-top:10px;
-}
-
-.btn{
-    margin-top:15px;
-    border:none;
-    padding:10px 20px;
-    border-radius:10px;
-    background:#6c63ff;
-    color:white;
-    cursor:pointer;
-}
-
-.btn:hover{
-    background:#574fff;
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.05);
+margin-bottom:20px;
+position: relative;
 }
 
 .pet{
-    font-size:80px;
-    text-align:center;
+text-align:center;
+font-size:90px;
+animation:float 3s infinite ease-in-out;
+margin-bottom: 10px;
 }
 
-.level{
-    text-align:center;
-    margin-top:10px;
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-12px);}
+100%{transform:translateY(0);}
+}
+
+.menu{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin-top:20px;
+}
+
+.menu-btn{
+background:white;
+border:none;
+border-radius:20px;
+padding:15px 10px;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,.04);
+transition:.3s;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.menu-btn:hover{
+transform:translateY(-3px);
+background: #fcfcff;
+}
+
+.menu-btn.active-tab {
+background: #eef4ff;
+border: 2px solid #6C63FF;
+}
+
+.icon{
+font-size:32px;
+}
+
+.label{
+margin-top:8px;
+font-size:12px;
+font-weight:600;
+color: #4a5568;
+}
+
+.section{
+display:none;
+animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.active{
+display:block;
+}
+
+.progress{
+height:18px;
+background:#eee;
+border-radius:30px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.progress-bar{
+height:100%;
+background:linear-gradient(90deg,#22c55e,#10b981);
+width:0%;
+transition: width 0.5s ease;
 }
 
 .challenge{
-    margin-top:15px;
-    padding:15px;
-    background:#eef2ff;
-    border-radius:15px;
+background:#f7fafc;
+padding:15px;
+border-radius:15px;
+margin-top:10px;
+display: flex;
+align-items: center;
+gap: 10px;
+transition: 0.3s;
+border-left: 4px solid #cbd5e0;
 }
 
-footer{
-    text-align:center;
-    margin-top:30px;
-    padding:20px;
-    color:#666;
+.challenge.completed {
+background: #e6fffa;
+border-left: 4px solid #319795;
+color: #234e52;
 }
 
-input{
-    width:100%;
-    padding:10px;
-    margin-top:10px;
-    border:1px solid #ddd;
-    border-radius:10px;
+button.action{
+margin-top:15px;
+background:#6C63FF;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:12px;
+cursor:pointer;
+font-weight: 600;
+width: 100%;
+transition: 0.2s;
 }
 
-.badge{
-    display:inline-block;
-    background:#ffe08a;
-    padding:5px 10px;
-    border-radius:20px;
-    margin-top:10px;
+button.action:hover{
+background:#574bff;
 }
 
-.ai-box{
-    background:#f0f8ff;
-    border-left:5px solid #6c63ff;
-    padding:10px;
-    margin-top:10px;
-    border-radius:10px;
+button.secondary {
+background: #e2e8f0;
+color: #4a5568;
+}
+button.secondary:hover {
+background: #cbd5e0;
+}
+
+.points{
+font-size:18px;
+font-weight:bold;
+color:#6C63FF;
+}
+
+.level-alert {
+background: #feebc8;
+color: #c05621;
+padding: 10px;
+border-radius: 10px;
+text-align: center;
+margin-top: 10px;
+display: none;
+font-weight: bold;
+animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+0% { opacity: 0.9; }
+50% { opacity: 1; }
+100% { opacity: 0.9; }
 }
 </style>
 </head>
-
 <body>
 
 <header>
-    <h1>🌱 Wellness App</h1>
-    <p>Tu bienestar, tu mejor versión</p>
+    <h1>🌱 Wellness</h1>
+    <p>Hola, Erick 👋</p>
+    <div class="streak">🔥 Racha: <span id="streak">12</span> días</div>
 </header>
 
 <div class="container">
 
     <div class="card">
-        <h2>Hola, Erick 👋</h2>
-        <p>Tu progreso de hoy</p>
-
-        <div class="progress-container">
-            <div class="progress" id="dailyProgress"></div>
+        <div class="pet" id="petAvatar">🌱</div>
+        <h2 style="text-align:center;" id="petName">Leafy</h2>
+        <p style="text-align:center; font-weight: 600;">Nivel <span id="level">1</span></p>
+        <p style="text-align:center;" class="points">⭐ XP: <span id="xp">0</span> / <span id="nextLevelXp">100</span></p>
+        <div class="progress">
+            <div class="progress-bar" id="bar"></div>
         </div>
+        <div id="levelAlert" class="level-alert">🎉 ¡Leafy ha evolucionado! 🎉</div>
+    </div>
 
-        <p id="progressText">65% completado</p>
+    <div class="menu">
+        <button class="menu-btn active-tab" id="btn-agua" onclick="showSection('agua')">
+            <div class="icon">💧</div>
+            <div class="label">Agua</div>
+        </button>
+        <button class="menu-btn" id="btn-actividad" onclick="showSection('actividad')">
+            <div class="icon">🏃</div>
+            <div class="label">Actividad</div>
+        </button>
+        <button class="menu-btn" id="btn-alimentacion" onclick="showSection('alimentacion')">
+            <div class="icon">🥗</div>
+            <div class="label">Comida</div>
+        </button>
+        <button class="menu-btn" id="btn-sueno" onclick="showSection('sueno')">
+            <div class="icon">😴</div>
+            <div class="label">Sueño</div>
+        </button>
+        <button class="menu-btn" id="btn-retos" onclick="showSection('retos')">
+            <div class="icon">🎯</div>
+            <div class="label">Retos</div>
+        </button>
+        <button class="menu-btn" id="btn-asistente" onclick="showSection('asistente')">
+            <div class="icon">🤖</div>
+            <div class="label">Asistente</div>
+        </button>
     </div>
 
     <br>
 
-    <div class="cards">
-
-        <div class="card">
-            <h3>💧 Agua</h3>
-            <p>Meta: 8 vasos</p>
-            <h2 id="waterCount">0</h2>
-            <button class="btn" onclick="addWater()">Agregar vaso</button>
-        </div>
-
-        <div class="card">
-            <h3>🏃 Actividad Física</h3>
-            <p>Pasos realizados</p>
-            <h2 id="steps">0</h2>
-            <button class="btn" onclick="addSteps()">+1000 pasos</button>
-        </div>
-
-        <div class="card">
-            <h3>🥗 Alimentación</h3>
-            <p>Frutas y verduras</p>
-            <h2 id="food">0</h2>
-            <button class="btn" onclick="addFood()">Agregar porción</button>
-        </div>
-
+    <div id="agua" class="card section active">
+        <h2>💧 Hidratación</h2>
+        <p>Meta diaria: 8 vasos para mantener sana la tierra de Leafy.</p>
+        <h1 id="water" style="font-size: 36px; margin: 10px 0;">0/8</h1>
+        <button class="action" onclick="addWater()">Agregar vaso</button>
     </div>
 
-    <br>
-
-    <div class="cards">
-
-        <div class="card">
-            <h3>🐣 Mascota Virtual</h3>
-
-            <div class="pet" id="pet">
-                🌱
-            </div>
-
-            <div class="level">
-                Nivel <span id="level">1</span>
-            </div>
-
-            <div class="badge">
-                XP: <span id="xp">0</span>
-            </div>
-
-        </div>
-
-        <div class="card">
-            <h3>🏆 Racha</h3>
-            <h1 id="streak">0</h1>
-            <p>días saludables</p>
-
-            <div class="challenge">
-                Meta:
-                <br>
-                Beber 8 vasos de agua
-            </div>
-        </div>
-
-        <div class="card">
-            <h3>🤖 IA Wellness</h3>
-
-            <div class="ai-box" id="advice">
-                Hoy intenta caminar 30 minutos.
-            </div>
-
-            <button class="btn" onclick="generateAdvice()">
-                Nuevo consejo
-            </button>
-
-        </div>
-
+    <div id="actividad" class="card section">
+        <h2>🏃 Actividad Física</h2>
+        <p>Meta diaria: 5000 pasos (¡Activa la energía!).</p>
+        <h1 id="steps" style="font-size: 36px; margin: 10px 0;">0 pasos</h1>
+        <button class="action" onclick="addSteps()">+1000 pasos</button>
     </div>
 
-    <br>
-
-    <div class="card">
-        <h3>📊 Estadísticas</h3>
-
-        <p>Agua: <span id="statWater">0</span> vasos</p>
-        <p>Pasos: <span id="statSteps">0</span></p>
-        <p>Alimentación saludable: <span id="statFood">0</span></p>
-
+    <div id="alimentacion" class="card section">
+        <h2>🥗 Alimentación Saludable</h2>
+        <p>Porciones de frutas o verduras consumidas hoy:</p>
+        <h1 id="food" style="font-size: 36px; margin: 10px 0;">0</h1>
+        <button class="action" onclick="addFood()">Agregar porción saludable</button>
     </div>
 
-</div>
+    <div id="sueno" class="card section">
+        <h2>😴 Registro del Sueño</h2>
+        <p>Meta: Dormir 8 horas para que Leafy recupere energía por la noche.</p>
+        
+        <div class="challenge" id="sleep-status" style="margin-top: 15px; border-left: 4px solid #8B5CF6;">
+            <span id="sleep-emoji">⏰</span> <span id="sleep-text">¿Listo para desconectar? Deja las pantallas de lado.</span>
+        </div>
 
-<footer>
-    Wellness App © 2026
-</footer>
+        <button class="action" id="btn-dormir" onclick="iniciarSueno()" style="background: #8B5CF6;">
+            🌙 Ir a dormir (Apagar luces)
+        </button>
+        
+        <button class="action" id="btn-despertar" onclick="terminarSueno()" style="background: #10b981; display: none;">
+            ☀️ ¡Despertar y cobrar recompensas!
+        </button>
+    </div>
 
-<script>
-
-let water = 0;
-let steps = 0;
-let food = 0;
-let xp = 0;
-let level = 1;
-
-function updateProgress(){
-
-    let total = (
-        Math.min(water,8)/8 +
-        Math.min(steps,10000)/10000 +
-        Math.min(food,5)/5
-    ) / 3;
-
-    let percentage = Math.round(total*100);
-
-    document.getElementById("dailyProgress").style.width =
-    percentage + "%";
-
-    document.getElementById("progressText").innerText =
-    percentage + "% completado";
-}
-
-function addXP(points){
-
-    xp += points;
-
-    if(xp >= level*100){
-        level++;
-        document.getElementById("level").innerText = level;
-
-        alert("🎉 ¡Subiste al nivel " + level + "!");
-    }
-
-    document.getElementById("xp").innerText = xp;
-}
-
-function addWater(){
-
-    water++;
-
-    document.getElementById("waterCount").innerText = water;
-    document.getElementById("statWater").innerText = water;
-
-    addXP(10);
-    updateProgress();
-}
-
-function addSteps(){
-
-    steps += 1000;
-
-    document.getElementById("steps").innerText = steps;
-    document.getElementById("statSteps").innerText = steps;
-
-    addXP(15);
-    updateProgress();
-}
-
-function addFood(){
-
-    food++;
-
-    document.getElementById("food").innerText = food;
-    document.getElementById("statFood").innerText = food;
-
-    addXP(20);
-    updateProgress();
-}
-
-function generateAdvice(){
-
-    const tips = [
-
-        "💧 Bebe más agua durante el día.",
-        "🏃 Realiza 30 minutos de actividad física.",
-        "🍎 Consume más frutas y verduras.",
-        "😴 Intenta dormir al menos 8 horas.",
-        "🚶 Da una caminata después de almorzar.",
-        "📵 Reduce el uso del celular antes de dormir.",
-        "🧘 Practica respiraciones profundas."
-    ];
-
-    let random =
-        Math.floor(Math.random()*tips.length);
-
-    document.getElementById("advice").innerText =
-        tips[random];
-}
-
-updateProgress();
-function startApp(){
-
-    const name = document.getElementById("userName").value.trim();
-    const age = document.getElementById("userAge").value.trim();
-
-    if(!name || !age){
-        alert("Completa tu nombre y edad");
-        return;
-    }
-
-    localStorage.setItem("lifesync_name", name);
-    localStorage.setItem("lifesync_age", age);
-
-    document.getElementById("greeting").innerText =
-        "Hola, " + name + " 👋";
-
-    document.getElementById("ageText").innerText =
-        "Edad: " + age + " años";
-
-    document.getElementById("welcomeScreen").style.display = "none";
-}
-
-window.addEventListener("load", () => {
-
-    const name = localStorage.getItem("lifesync_name");
-    const age = localStorage.getItem("lifesync_age");
-
-    if(name && age){
-        document.getElementById("greeting").innerText =
-            "Hola, " + name + " 👋";
-
-        document.getElementById("ageText").innerText =
-            "Edad: " + age + " años";
-
-        document.getElementById("welcomeScreen").style.display = "none";
-    }
-});
-</script>
-
-</body>
-</html>
-<h2 id="greeting">Hola 👋</h2>
-<p id="ageText"></p>
+    <div id="retos" class="card section">
+        <h2>🎯 Misiones Diarias</h2>
+        <div class="challenge" id="chk-water">
+            <span class="status-icon">❌</span> Beber 8 vasos de agua
+        </div>
+        <div class="challenge" id="chk-food">
+            <span class="status-icon">❌</span> Comer al menos 1 fruta/verdura
+        </div>
+        <div class="challenge" id="chk-steps">
+            <span
