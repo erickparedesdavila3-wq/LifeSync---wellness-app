@@ -4,7 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wellness App</title>
+.welcome-screen{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(135deg,#6c63ff,#9c6bff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
 
+.welcome-card{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    width:320px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.2);
+}
+
+.welcome-card h1{
+    margin-bottom:10px;
+}
 <style>
 *{
     margin:0;
@@ -14,7 +38,17 @@
 }
 
 body{
-    background:#f5f7ff;
+   <div id="welcomeScreen" class="welcome-screen">
+  <div class="welcome-card">
+    <h1>🌱 LifeSync</h1>
+    <p>Bienvenido a tu app de bienestar</p>
+
+    <input type="text" id="userName" placeholder="Escribe tu nombre">
+    <input type="number" id="userAge" placeholder="Escribe tu edad">
+
+    <button class="btn" onclick="startApp()">Comenzar</button>
+  </div>
+</div>
 }
 
 header{
@@ -336,8 +370,46 @@ function generateAdvice(){
 }
 
 updateProgress();
+function startApp(){
 
+    const name = document.getElementById("userName").value.trim();
+    const age = document.getElementById("userAge").value.trim();
+
+    if(!name || !age){
+        alert("Completa tu nombre y edad");
+        return;
+    }
+
+    localStorage.setItem("lifesync_name", name);
+    localStorage.setItem("lifesync_age", age);
+
+    document.getElementById("greeting").innerText =
+        "Hola, " + name + " 👋";
+
+    document.getElementById("ageText").innerText =
+        "Edad: " + age + " años";
+
+    document.getElementById("welcomeScreen").style.display = "none";
+}
+
+window.addEventListener("load", () => {
+
+    const name = localStorage.getItem("lifesync_name");
+    const age = localStorage.getItem("lifesync_age");
+
+    if(name && age){
+        document.getElementById("greeting").innerText =
+            "Hola, " + name + " 👋";
+
+        document.getElementById("ageText").innerText =
+            "Edad: " + age + " años";
+
+        document.getElementById("welcomeScreen").style.display = "none";
+    }
+});
 </script>
 
 </body>
 </html>
+<h2 id="greeting">Hola 👋</h2>
+<p id="ageText"></p>
